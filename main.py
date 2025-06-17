@@ -151,6 +151,58 @@ class ChatbotAssistant:
         with open(dimensions_path, 'w') as f :
             json.dump({'input_size': self.X.shape[1], 'output_size': len(self.intents) }, f)
 
+    def load_model(self, model_path, dimensions_path):
+        with open(dimensions_path, 'r') as f:
+            dimensions = json.load(f)
+        self.model = ChatbotModel(dimensions['input_size'], dimensions['output_size'])
+        self.model.load_state_dict(torch.load(model_path, weights_only=True))
+
+    def process_message(self, input_message):
+        # take the input message and split it into tokens reduce them to the word stem
+        words = self.tokenize_and_lemmatize(input_message)
+        bag = self.bag_of_words(words)
+
+        bag_tensor = torch.tensor([bag], dtype=torch.float32)
+
+        self.model.eval()
+        with torch.no_grad():
+            predictions = self.model(bag_tensor)
+
+        predicted_class_index = torch.argmax(predictions, dim=1).item()
+        predicted_intent = self.intents[predicted_class_index]
+
+        if self.function_mappings:
+            if predicted_intent in self.function_mappings:
+                self.function_mappings[predicted_intent]()
+
+        if self.intents_responses[predicted_intent]:
+            return random.choice(self.intents_responses[predicted_intent])
+
+        else:
+            return None
+
+
+
+if __name__ == '__main__':
+        assistant = ChatbotAssistant('intents.json')
+        assistant.parse_intents()
+        assistant.prepare_data()
+
+        assistant.train_model(batch_size=8, lr=0.001, epochs=100)
+
+        assistant.save_model('chatbot_model.pth', 'dimensions.json')
+
+        # assistant = ChatbotAssistant('intents.json')
+        # assistant.parse_intents()
+        assistant.load_model('chatbot_model.pth', 'dimensions.json')
+
+        while True:
+            message = input('Enter your question: ')
+
+            if message == '/quit':
+                break
+
+            print(assistant.process_message(message))
 
 
 
