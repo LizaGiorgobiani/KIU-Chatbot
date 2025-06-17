@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KIU Chatbot</title>
+  <style>
+    :root {
+      --kiu-blue: #1b2a56;
+      --kiu-light-blue: #f5f8ff;
+      --user-bg: #d0e4ff;
+      --bot-bg: #ffffff;
+      --border: #ccd7e6;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background-color: var(--kiu-light-blue);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .chat-wrapper {
+      background-color: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      background-color: var(--kiu-blue);
+      color: white;
+      padding: 1rem;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      background-color: var(--kiu-light-blue);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .msg {
+      padding: 12px 16px;
+      border-radius: 10px;
+      max-width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    .user {
+      background-color: var(--user-bg);
+    }
+
+    .bot {
+      background-color: var(--bot-bg);
+    }
+
+    .input-area {
+      display: flex;
+      border-top: 1px solid var(--border);
+      padding: 1rem;
+      background-color: white;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    input:disabled {
+      background-color: #eee;
+    }
+
+    button {
+      padding: 10px 18px;
+      font-size: 1rem;
+      background-color: var(--kiu-blue);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover:enabled {
+      background-color: #142045;
+    }
+
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chat-wrapper">
+  <div class="chat-header">KIU Chatbot</div>
+  <div class="chat-box" id="chatbox">
+    <div class="msg bot">Hi, how can I help today?</div>
+  </div>
+  <div class="input-area">
+    <input type="text" id="input" placeholder="Ask me anything..." />
+    <button id="sendBtn" onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  const chatbox = document.getElementById("chatbox");
+  const input = document.getElementById("input");
+  const sendBtn = document.getElementById("sendBtn");
+
+  async function sendMessage() {
+    const message = input.value.trim();
+    if (!message) return;
+
+    appendMessage("You", message, "user");
+    input.value = "";
+
+    if (message.toLowerCase() === "/quit") {
+      appendMessage("Bot", "Goodbye! Feel free to come back anytime.", "bot");
+      input.disabled = true;
+      sendBtn.disabled = true;
+      return;
+    }
+
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
+    });
+
+    const data = await res.json();
+    appendMessage("Bot", data.response, "bot");
+  }
+
+  function appendMessage(sender, text, type) {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = `msg ${type}`;
+    msgDiv.innerText = `${sender}: ${text}`;
+    chatbox.appendChild(msgDiv);
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+
+  input.addEventListener("keypress", e => {
+    if (e.key === "Enter") sendMessage();
+  });
+</script>
+
+</body>
+</html>
