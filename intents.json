@@ -1,0 +1,181 @@
+{
+  "intents": [
+    {
+      "tag": "wifi_info",
+      "patterns": [
+        "What's the Wi-Fi password?",
+        "How do I connect to the university Wi‑Fi?",
+        "Is there internet on campus?",
+        "Where is the Wi‑Fi login page?",
+        "Wi‑Fi password please"
+      ],
+      "responses": [
+        "The university Wi‑Fi password is kiukiu2020.",
+        "You can connect to the KIU network using password: kiukiu2020."
+      ]
+    },
+    {
+      "tag": "library_location",
+      "patterns": [
+        "Where is the library?",
+        "Can you tell me the library location?",
+        "I need to go to the library",
+        "How do I get to the library?",
+        "Where's the library at KIU?"
+      ],
+      "responses": [
+        "The library is located on the 1st floor of Building K.",
+        "Head to Building K, first floor — that’s where the library is!"
+      ]
+    },
+    {
+      "tag": "course_registration",
+      "patterns": [
+        "How do I register for courses?",
+        "Where do I enroll in my subjects?",
+        "Course registration process?",
+        "Help me sign up for classes",
+        "I want to register for next semester"
+      ],
+      "responses": [
+        "Go to your student portal > Academics > Course Registration.",
+        "You can register under 'Course Registration' in your portal account."
+      ],
+      "context_set": "registration"
+    },
+    {
+      "tag": "prereq_question",
+      "patterns": [
+        "Do I need CS101 before taking CS102?",
+        "What are the prerequisites for CS102?",
+        "Is CS101 required for the next course?",
+        "Do I need any class before CS102?",
+        "Tell me if CS101 is a prerequisite"
+      ],
+      "responses": [
+        "Yes, CS101 is a required prerequisite for CS102.",
+        "You must complete CS101 before enrolling in CS102."
+      ],
+      "context_filter": "registration"
+    },
+    {
+      "tag": "exam_schedule",
+      "patterns": [
+        "When are my exams?",
+        "Show me the exam timetable",
+        "Where can I find my exam schedule?",
+        "Exam dates for this semester?",
+        "Tell me my upcoming exams"
+      ],
+      "responses": [
+        "Your exam schedule is available in the 'Exams' tab in your student portal.",
+        "Log in to your portal and go to 'Exams' to view your schedule."
+      ]
+    },
+    {
+      "tag": "dorm_services",
+      "patterns": [
+        "How do I request dorm maintenance?",
+        "My dorm light is broken, what do I do?",
+        "How to report dorm issues?",
+        "Dorm service request form?",
+        "Who do I call for dorm problems?"
+      ],
+      "responses": [
+        "You can request dorm maintenance through the Dorm Management section of your portal.",
+        "Report issues to the dorm staff or submit a request online via Dorm Services."
+      ]
+    },
+    {
+      "tag": "admissions_deadline",
+      "patterns": [
+        "When is the admission deadline?",
+        "How long can I apply?",
+        "Until when can I apply for 2025?",
+        "Admissions deadline for this year"
+      ],
+      "responses": [
+        "International students can apply for 2025–2026 until **August 15, 2025**. 🗓️",
+        "The application deadline for the next academic year is **August 15, 2025**. Please apply before then."
+      ]
+    },
+    {
+      "tag": "int_language_requirement",
+      "patterns": [
+        "Do I need English proficiency?",
+        "What English test is required?",
+        "Is TOEFL accepted?",
+        "IELTS or Duolingo required?"
+      ],
+      "responses": [
+        "Yes. English B1 level is required. Accepted tests: TOEFL, IELTS, Pearson, Duolingo.",
+        "You need at least B1-level English via TOEFL, IELTS, Versant, or Duolingo English Test. Contact apply@kiu.edu.ge if unsure."
+      ]
+    },
+    {
+      "tag": "online_interview",
+      "patterns": [
+        "Do I have to do an interview?",
+        "Is there an English interview?",
+        "What about interviews for admission?",
+        "Tell me about the admission interview"
+      ],
+      "responses": [
+        "All undergrad applicants must pass an **online interview in English** as part of the admission process.",
+        "Yes – there’s an English online interview, required before the university issues the consent letter."
+      ]
+    },
+    {
+      "tag": "tuition_fees",
+      "patterns": [
+        "How much is tuition?",
+        "What are the fees?",
+        "Cost per year for undergrad?",
+        "Tuition and hostel fee?"
+      ],
+      "responses": [
+        "Tuition is around **$6 000/year** and hostel is approx. **$3 000/year** for MBBS and undergrad programs.",
+        "Expect ≈ $6 000/year tuition and ≈ $3 000/year dorm fee for most programs."
+      ]
+    },
+    {
+      "tag": "programs_offered",
+      "patterns": [
+        "Which programs are available?",
+        "What degrees does KIU offer?",
+        "Undergrad majors?",
+        "Is CS offered?"
+      ],
+      "responses": [
+        "Current undergrad English programs: Management, Mathematics, Computer Science.",
+        "KIU offers BSc in Management, Mathematics, and Computer Science (with more programs launching soon)."
+      ]
+    },
+    {
+      "tag": "scholarships",
+      "patterns": [
+        "Are scholarships available?",
+        "Does KIU offer grants?",
+        "How to get scholarship?",
+        "Funding for students?"
+      ],
+      "responses": [
+        "Yes, there are merit-, need‑based, government & international scholarships available.",
+        "Check the Student Grant Fund for scholarship info: merit-based, needs-based, and program-specific grants."
+      ]
+    },
+    {
+      "tag": "campus_features",
+      "patterns": [
+        "What facilities are on campus?",
+        "Tell me about dorms and labs",
+        "Do you have cafeterias?",
+        "What’s the campus like?"
+      ],
+      "responses": [
+        "Campus has full‑furnished dorms, modern labs, cafeterias, library, and co‑working spaces.",
+        "You’ll find state‑of‑the‑art labs, cafeterias, library, co‑working areas—and student housing is fully furnished."
+      ]
+    }
+  ]
+}
